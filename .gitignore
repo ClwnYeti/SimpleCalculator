@@ -33,7 +33,6 @@ local.properties
 
 # Jetpack Compose previews cache
 *.pb
-*.xml
 captures/
 .navigation/
 
