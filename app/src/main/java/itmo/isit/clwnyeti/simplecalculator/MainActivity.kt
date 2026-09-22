@@ -18,9 +18,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import itmo.isit.clwnyeti.simplecalculator.ui.theme.SimpleCalculatorTheme
 import itmo.isit.clwnyeti.simplecalculator.logic.DefaultValues
-import itmo.isit.clwnyeti.simplecalculator.logic.handleOperations
+import itmo.isit.clwnyeti.simplecalculator.logic.handleOneNumberOperations
+import itmo.isit.clwnyeti.simplecalculator.logic.handleTwoNumberOperations
 import itmo.isit.clwnyeti.simplecalculator.ui.components.NumberSection
-import itmo.isit.clwnyeti.simplecalculator.ui.components.OperationSection
+import itmo.isit.clwnyeti.simplecalculator.ui.components.OperationProcessingSection
+import itmo.isit.clwnyeti.simplecalculator.ui.components.OperationResultSection
 import itmo.isit.clwnyeti.simplecalculator.ui.theme.PurpleGrey40
 import itmo.isit.clwnyeti.simplecalculator.ui.theme.PurpleGrey80
 
@@ -30,10 +32,10 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            val currentText = rememberSaveable { mutableStateOf(DefaultValues.InitialText) }
-            val currentValue = rememberSaveable { mutableDoubleStateOf(DefaultValues.InitialValue) }
+            val currentText = rememberSaveable { mutableStateOf(DefaultValues.INITIAL_TEXT) }
+            val currentValue = rememberSaveable { mutableDoubleStateOf(DefaultValues.INITIAL_VALUE) }
             val lastOperation = rememberSaveable { mutableStateOf(DefaultValues.InitialOperation) }
-            val rightValue = rememberSaveable { mutableStateOf(DefaultValues.InitialRightValueString) }
+            val rightValue = rememberSaveable { mutableStateOf(DefaultValues.INITIAL_RIGHT_VALUE_STRING) }
 
             SimpleCalculatorTheme {
                 Column(
@@ -49,9 +51,13 @@ class MainActivity : ComponentActivity() {
                             .background(PurpleGrey40),
                         text = currentText.value
                     )
-                    OperationSection(4, currentText, currentValue, lastOperation, rightValue)
+                    OperationProcessingSection(4, currentText, currentValue, lastOperation, rightValue)
                     {
-                        handleOperations(currentValue, lastOperation, rightValue)
+                        handleTwoNumberOperations(currentValue, lastOperation, rightValue)
+                    }
+                    OperationResultSection(3, currentText, currentValue, lastOperation, rightValue)
+                    {
+                        currentOperation -> handleOneNumberOperations(currentValue, currentOperation, lastOperation, rightValue)
                     }
                     NumberSection(2, 5, 0, currentText, rightValue)
                 }

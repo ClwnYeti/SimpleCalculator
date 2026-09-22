@@ -1,6 +1,15 @@
 package itmo.isit.clwnyeti.simplecalculator.logic
 
-enum class Operations(val text: String) {
+interface Operations
+enum class OneNumberOperations(val text: String) : Operations {
+    Equals("="),
+    Clear("CE"),
+    Point(",");
+
+    fun toText(): String = text
+}
+
+enum class TwoNumbersOperations(val text: String) : Operations {
     Plus("+"),
     Minus("-"),
     Divide("/"),
