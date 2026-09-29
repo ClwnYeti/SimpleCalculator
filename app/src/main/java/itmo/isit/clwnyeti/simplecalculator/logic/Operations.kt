@@ -3,7 +3,7 @@ package itmo.isit.clwnyeti.simplecalculator.logic
 interface Operations
 enum class OneNumberOperations(val text: String) : Operations {
     Equals("="),
-    Clear("CE"),
+    Clear("C"),
     Point(",");
 
     fun toText(): String = text
