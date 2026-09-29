@@ -19,6 +19,14 @@ fun OperationProcessingButton(
 ) {
     Button(onClick = {
         try {
+            if (
+                operation == TwoNumbersOperations.Minus &&
+                rightValue.value.isEmpty()
+            ) {
+                rightValue.value = TwoNumbersOperations.Minus.text
+                return@Button
+            }
+
             if (rightValue.value != "") {
                 handleOperation()
                 currentText.value = currentValue.value.toString()
